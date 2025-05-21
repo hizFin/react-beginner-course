@@ -106,10 +106,25 @@ function App() {
         body = topics[i].body;
       }
     }
-    contextControl = <li><a href={'/update' + id} onClick={event=>{
+    contextControl = <>
+    <li><a href={'/update' + id} onClick={event=>{
       event.preventDefault(); // 👉 새로고침 방지
       setMode('UPDATE');
-    }}>Update</a></li>    
+      }}>Update</a>
+    </li>
+    <li><input type="button" value="Delete" onClick={()=>{
+      const newTopics = []
+      for(let i=0; i<topics.length; i++){
+        if(topics[i].id !== id){
+          newTopics.push(topics[i]);
+        }
+      }
+        setTopics(newTopics);
+        setMode('WELCOME');
+    }}></input>
+
+    </li>
+    </>    
     content = <Article title={title} body={body}/>
   }else if(mode === 'CREATE'){
     content = <Create onCreate={(_title, _body)=>{
